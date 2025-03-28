@@ -13,6 +13,7 @@ export default function Users() {
   const [editingUser, setEditingUser] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [deletingUserId, setDeletingUserId] = useState(null);
   const observer = useRef();
   const { logout } = useAuth();
 
@@ -100,28 +101,36 @@ export default function Users() {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
-      try {
-        await deleteUser(id);
-        // Remove the user from modified users
-        setModifiedUsers(prev => {
-          const newModifiedUsers = { ...prev };
-          delete newModifiedUsers[id];
-          return newModifiedUsers;
-        });
-        // Update the users list
-        setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
-        
-        // If we're on the first page and delete the last user, fetch more users
-        if (currentPage === 1 && users.length <= 6) {
-          fetchUsers();
-        }
-        toast.success('User deleted successfully!');
-      } catch (err) {
-        setError(err.error || 'Failed to delete user');
-        toast.error('Failed to delete user');
+    setDeletingUserId(id);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deleteUser(deletingUserId);
+      // Remove the user from modified users
+      setModifiedUsers(prev => {
+        const newModifiedUsers = { ...prev };
+        delete newModifiedUsers[deletingUserId];
+        return newModifiedUsers;
+      });
+      // Update the users list
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== deletingUserId));
+      
+      // If we're on the first page and delete the last user, fetch more users
+      if (currentPage === 1 && users.length <= 6) {
+        fetchUsers();
       }
+      toast.success('User deleted successfully!');
+    } catch (err) {
+      setError(err.error || 'Failed to delete user');
+      toast.error('Failed to delete user');
+    } finally {
+      setDeletingUserId(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setDeletingUserId(null);
   };
 
   return (
@@ -261,6 +270,41 @@ export default function Users() {
           </div>
         ))}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {deletingUserId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl transform transition-all">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Delete User
+              </h3>
+              <p className="text-sm text-gray-500 mb-6">
+                Are you sure you want to delete this user? This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={cancelDelete}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-rose-500 rounded-lg hover:from-red-600 hover:to-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out transform hover:scale-[1.02] shadow-md"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {loading && (
         <div className="text-center py-8">
