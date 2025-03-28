@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 import { Toaster } from 'react-hot-toast';
-import Login from './pages/Login';
-import Users from './pages/Users';
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
+import Login from './pages/Login.jsx';
+import Users from './pages/Users.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Navbar from './components/Navbar.jsx';
 
 function App() {
   return (
