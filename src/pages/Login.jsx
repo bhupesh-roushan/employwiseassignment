@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext.jsx';
-import { login as loginApi } from '../services/api.js';
+import { useAuth } from './../contexts/AuthContext.jsx';
+import { login as loginApi } from './../services/api.js';
 import toast from 'react-hot-toast';
 
 export default function Login() {

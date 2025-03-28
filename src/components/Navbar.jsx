@@ -1,5 +1,5 @@
-import { useAuth } from '../contexts/AuthContext.jsx';
-import react from '../assets/react.svg';
+import { useAuth } from './../contexts/AuthContext.jsx';
+import react from './../assets/react.svg';
 
 export default function Navbar() {
   const { token, logout } = useAuth();

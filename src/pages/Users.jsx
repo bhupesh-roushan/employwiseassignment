@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useAuth } from '../contexts/AuthContext.jsx';
-import { getUsers, updateUser, deleteUser } from '../services/api.js';
+import { useAuth } from './../contexts/AuthContext.jsx';
+import { getUsers, updateUser, deleteUser } from './../services/api.js';
 import toast from 'react-hot-toast';
 
 export default function Users() {
