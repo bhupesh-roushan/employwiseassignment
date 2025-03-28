@@ -2,15 +2,50 @@
 
 A React application that integrates with the Reqres API to perform basic user management functions. The application includes authentication, user listing with pagination, and user management features (edit/delete).
 
+## Live Demo
+[View Live Demo](http://employwise-eta.vercel.app/)
+
+## GitHub Repository
+[View Source Code](https://github.com/bhupesh-roushan/employwiseassignment)
+
 ## Features
 
-- User authentication
-- Paginated user listing
-- User profile editing
-- User deletion
-- Responsive design
-- Protected routes
-- Token-based authentication
+- User Authentication
+  - Secure login system
+  - Token-based authentication
+  - Protected routes
+  - Automatic redirection to login page
+  - Persistent session management
+
+- User Management
+  - View user profiles with avatars
+  - Edit user information (first name, last name, email)
+  - Delete users with confirmation dialog
+  - Real-time updates after operations
+  - Success/error notifications using toast messages
+
+- User Listing
+  - Infinite scroll loading
+  - Responsive grid layout (2 columns)
+  - Search functionality (by name or email)
+  - Loading states with spinners
+  - "No more users" indicator
+
+- UI/UX Features
+  - Modern and clean design
+  - Responsive layout for all screen sizes
+  - Smooth animations and transitions
+  - Interactive hover effects
+  - Custom delete confirmation dialog
+  - Loading indicators
+  - Error handling with user-friendly messages
+
+- Additional Features
+  - Client-side search and filtering
+  - Lazy loading for better performance
+  - Toast notifications for user feedback
+  - Error boundary handling
+  - Responsive navigation bar
 
 ## Technologies Used
 
@@ -20,6 +55,7 @@ A React application that integrates with the Reqres API to perform basic user ma
 - React Router
 - Context API
 - Axios
+- React Hot Toast
 
 ## Prerequisites
 
@@ -63,18 +99,31 @@ The application uses the following Reqres API endpoints:
 ## Project Structure
 
 ```
-src/
-├── components/
-│   └── ProtectedRoute.jsx
-├── contexts/
-│   └── AuthContext.jsx
-├── pages/
-│   ├── Login.jsx
-│   └── Users.jsx
-├── services/
-│   └── api.js
-├── App.jsx
-└── main.jsx
+├── public/
+│   └── react.svg
+├── src/
+│   ├── assets/
+│   │   └── react.svg
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   └── ProtectedRoute.jsx
+│   ├── contexts/
+│   │   └── AuthContext.jsx
+│   ├── pages/
+│   │   ├── Login.jsx
+│   │   └── Users.jsx
+│   ├── services/
+│   │   └── api.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .gitignore
+├── index.html
+├── package.json
+├── postcss.config.js
+├── README.md
+├── tailwind.config.js
+└── vite.config.js
 ```
 
 ## Features Implementation
@@ -86,14 +135,17 @@ src/
 - Automatic redirection to login page when token is missing
 
 ### Level 2: User Listing
-- Paginated display of users
+- Infinite scroll loading
 - Responsive grid layout
 - User information display (avatar, name, email)
-- Navigation between pages
+- Search and filtering functionality
+- Loading states and indicators
 
 ### Level 3: User Management
 - Edit user information
-- Delete user with confirmation
-- Success/error message handling
+- Delete user with custom confirmation dialog
+- Success/error toast notifications
 - Real-time updates after operations
+- Client-side search and filtering
+
 
