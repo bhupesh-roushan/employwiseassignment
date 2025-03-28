@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { getUsers, updateUser, deleteUser } from '../services/api';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { getUsers, updateUser, deleteUser } from '../services/api.js';
 
 export default function Users() {
   const [users, setUsers] = useState([]);

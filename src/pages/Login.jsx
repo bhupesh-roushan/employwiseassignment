@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { login as loginApi } from '../services/api';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { login as loginApi } from '../services/api.js';
 
 export default function Login() {
   const [email, setEmail] = useState('');
