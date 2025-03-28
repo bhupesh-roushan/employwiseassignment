@@ -12,8 +12,19 @@ export default function Users() {
   const [error, setError] = useState('');
   const [editingUser, setEditingUser] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const observer = useRef();
   const { logout } = useAuth();
+
+  // Filter users based on search query
+  const filteredUsers = users.filter(user => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      user.first_name.toLowerCase().includes(searchLower) ||
+      user.last_name.toLowerCase().includes(searchLower) ||
+      user.email.toLowerCase().includes(searchLower)
+    );
+  });
 
   const lastUserRef = useCallback(node => {
     if (loading) return;
@@ -121,11 +132,34 @@ export default function Users() {
         </div>
       )}
 
+      {/* Search Bar */}
+      <div className="mb-8">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search users by name or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </div>
+        {searchQuery && (
+          <p className="mt-2 text-sm text-gray-600">
+            Found {filteredUsers.length} {filteredUsers.length === 1 ? 'user' : 'users'}
+          </p>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {users.map((user, index) => (
+        {filteredUsers.map((user, index) => (
           <div
             key={user.id}
-            ref={index === users.length - 1 ? lastUserRef : null}
+            ref={index === filteredUsers.length - 1 ? lastUserRef : null}
             className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
           >
             {editingUser?.id === user.id ? (
@@ -235,7 +269,13 @@ export default function Users() {
         </div>
       )}
 
-      {!hasMore && users.length > 0 && (
+      {!hasMore && users.length > 0 && filteredUsers.length === 0 && (
+        <div className="text-center py-8 text-gray-600 text-lg">
+          No users found matching your search
+        </div>
+      )}
+
+      {!hasMore && users.length > 0 && filteredUsers.length > 0 && (
         <div className="text-center py-8 text-gray-600 text-lg">
           No more users to load
         </div>
