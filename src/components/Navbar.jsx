@@ -24,7 +24,31 @@ export default function Navbar() {
           </div>
           
           {token && (
-            <div className="flex items-center">
+            <div className="flex items-center space-x-6">
+              <a
+                href="https://www.bhupesh.website"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-indigo-600 transition-colors duration-200 font-medium"
+              >
+                Portfolio
+              </a>
+              <a
+                href="https://linkedin.com/in/roushanb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-indigo-600 transition-colors duration-200 font-medium"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/bhupesh-roushan/employwiseassignment"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-indigo-600 transition-colors duration-200 font-medium"
+              >
+                GitHub
+              </a>
               <button
                 onClick={logout}
                 className="ml-4 px-4 py-2 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out transform hover:scale-[1.02] shadow-md"
